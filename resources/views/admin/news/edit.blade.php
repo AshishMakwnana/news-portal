@@ -25,7 +25,14 @@
                 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        ClassicEditor.create(document.querySelector('#editor')).catch(e => console.error(e));
+                        ClassicEditor.create(document.querySelector('#editor'), {
+                            simpleUpload: {
+                                uploadUrl: '{{ route('admin.media.upload') }}',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            }
+                        }).catch( e => console.error(e) );
                     });
                 </script>
             @endpush
