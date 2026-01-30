@@ -17,6 +17,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Media library routes
     Route::get('media', [\App\Http\Controllers\MediaController::class, 'index'])->name('media.index');
+    Route::get('media/list', [\App\Http\Controllers\MediaController::class, 'list'])->name('media.list');
     Route::post('media/upload', [\App\Http\Controllers\MediaController::class, 'upload'])->name('media.upload');
     Route::delete('media/{media}', [\App\Http\Controllers\MediaController::class, 'destroy'])->name('media.destroy');
 });

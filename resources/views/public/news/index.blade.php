@@ -15,7 +15,7 @@
             @foreach ($news as $item)
                 <article class="border p-4 rounded-lg">
                     <a href="{{ route('news.show', $item->slug) }}" class="text-xl font-semibold">{{ $item->title }}</a>
-                    <p class="text-sm text-gray-500">{{ $item->published_at->format('M d, Y') }} •
+                    <p class="text-sm text-gray-500">{{ $item->published_at?->format('M d, Y') ?? '' }} •
                         {{ $item->category?->name }}</p>
                     <p class="mt-2 text-gray-700">{{ Str::limit($item->excerpt, 150) }}</p>
                     <div class="mt-2">

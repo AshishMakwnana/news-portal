@@ -22,7 +22,7 @@ class CommentController extends Controller
         ]);
         // Notify moderators if comment is not auto-approved
         if (! $comment->approved) {
-            $moderators = \App\Models\User::role(['Super Admin','Editor','Moderator'])->get();
+            $moderators = \App\Models\User::role(['Super Admin', 'Editor', 'Moderator'])->get();
             if ($moderators->count()) {
                 \Illuminate\Support\Facades\Notification::send($moderators, new \App\Notifications\NewCommentForModeration($comment));
             }

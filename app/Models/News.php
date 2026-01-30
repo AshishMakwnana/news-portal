@@ -24,6 +24,13 @@ class News extends Model
         'language',
     ];
 
+    /**
+     * Attribute casting
+     */
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     protected static function booted()
     {
         static::creating(function ($news) {

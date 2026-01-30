@@ -12,6 +12,7 @@ class Media extends Model
     protected $fillable = [
         'user_id',
         'filename',
+        'thumbnail',
         'disk',
         'mime_type',
         'size',
@@ -19,7 +20,7 @@ class Media extends Model
         'collection',
     ];
 
-    protected $appends = ['url'];
+    protected $appends = ['url', 'thumbnail_url'];
 
     public function user()
     {
@@ -31,8 +32,13 @@ class Media extends Model
         return asset('storage/' . $this->filename);
     }
 
-    public function getThumbnailAttribute()
+    public function getThumbnailUrlAttribute()
     {
-        return $this->url; // placeholder, could be a resized version
+        if ($this->thumbnail) {
+            return asset('storage/' . $this->thumbnail);
+        }
+
+        // fall back to the original image
+        return $this->url;
     }
 }

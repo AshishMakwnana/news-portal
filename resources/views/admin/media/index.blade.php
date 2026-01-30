@@ -20,8 +20,10 @@
                         <div class="mt-2 flex items-center justify-between">
                             <div class="text-xs text-gray-500">{{ $m->mime_type }}</div>
                             <div class="flex items-center gap-2">
-                                <button type="button" class="text-sm text-blue-600" onclick="copyUrl('{{ $m->url }}')">Copy URL</button>
-                                <button type="button" class="text-sm text-green-600" onclick="insertToOpener('{{ $m->url }}')">Insert</button>
+                                <button type="button" class="text-sm text-blue-600"
+                                    onclick="copyUrl('{{ $m->url }}')">Copy URL</button>
+                                <button type="button" class="text-sm text-green-600"
+                                    onclick="insertToOpener('{{ $m->url }}')">Insert</button>
                                 <form action="{{ route('admin.media.destroy', $m) }}" method="POST" class="m-0">
                                     @csrf
                                     @method('DELETE')
@@ -39,12 +41,12 @@
 
     @push('scripts')
         <script>
-            function copyUrl(url){
-                navigator.clipboard.writeText(url).then(()=>alert('URL copied to clipboard'));
+            function copyUrl(url) {
+                navigator.clipboard.writeText(url).then(() => alert('URL copied to clipboard'));
             }
 
-            function insertToOpener(url){
-                if (window.opener && typeof window.opener.insertImage === 'function'){
+            function insertToOpener(url) {
+                if (window.opener && typeof window.opener.insertImage === 'function') {
                     window.opener.insertImage(url);
                     window.close();
                 } else {
