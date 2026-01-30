@@ -36,9 +36,9 @@ class RolePermissionSeeder extends Seeder
         $userRole = Role::firstOrCreate(['name' => 'User']);
 
         $super->givePermissionTo(Permission::all());
-        $editor->givePermissionTo(['create_news','edit_news','publish_news']);
-        $reporter->givePermissionTo(['create_news','edit_news']);
-        $moderator->givePermissionTo(['edit_news','delete_news']);
+        $editor->givePermissionTo(['create_news', 'edit_news', 'publish_news']);
+        $reporter->givePermissionTo(['create_news', 'edit_news']);
+        $moderator->givePermissionTo(['edit_news', 'delete_news']);
 
         // Create demo users
         $admin = User::firstOrCreate([

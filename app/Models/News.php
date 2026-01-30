@@ -50,4 +50,14 @@ class News extends Model
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function approvedComments()
+    {
+        return $this->comments()->where('approved', true)->latest();
+    }
 }
