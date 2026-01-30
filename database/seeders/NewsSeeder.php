@@ -20,7 +20,7 @@ class NewsSeeder extends Seeder
         $tags = Tag::all();
         if ($tags->count()) {
             foreach ($news as $n) {
-                $n->tags()->attach($tags->random(rand(0,3))->pluck('id')->toArray());
+                $n->tags()->attach($tags->random(rand(0, 3))->pluck('id')->toArray());
             }
         }
     }

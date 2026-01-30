@@ -30,6 +30,14 @@
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                 }
                             }
+                        }).then(editor => {
+                            window.editor = editor;
+                            window.insertImage = function(url){
+                                const imageElement = editor.model.change( writer => {
+                                    const image = writer.createElement('image', { src: url });
+                                    editor.model.insertContent(image, editor.model.document.selection);
+                                });
+                            }
                         }).catch(e => console.error(e));
                     });
                 </script>
@@ -38,9 +46,29 @@
                 <label class="block text-sm font-medium">Featured Image</label>
                 <div class="flex items-center gap-4">
                     <input type="file" name="featured_image" class="mt-1">
-                    <a href="{{ route('admin.media.index') }}" class="text-blue-600 underline">Open Media Library</a>
+                    <a href="{{ route('admin.media.index') }}" target="_blank" class="text-blue-600 underline">Open Media Library</a>
+                </div
+            </div>
+            <div class="mb-4 grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium">Category</label>
+                    <select name="category_id" class="mt-1 block w-full border rounded p-2">
+                        <option value="">— Select —</option>
+                        @foreach(App\Models\Category::all() as $cat)
+                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Tags</label>
+                    <select name="tags[]" multiple class="mt-1 block w-full border rounded p-2">
+                        @foreach(App\Models\Tag::all() as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
+
             <div class="mb-4">
                 <label class="block text-sm font-medium">Status</label>
                 <select name="status" class="mt-1 block w-full border rounded p-2">

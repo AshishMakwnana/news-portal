@@ -32,7 +32,15 @@
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                                 }
                             }
-                        }).catch( e => console.error(e) );
+                        }).then(editor => {
+                            window.editor = editor;
+                            window.insertImage = function(url){
+                                editor.model.change( writer => {
+                                    const image = writer.createElement('image', { src: url });
+                                    editor.model.insertContent(image, editor.model.document.selection);
+                                });
+                            }
+                        }).catch(e => console.error(e));
                     });
                 </script>
             @endpush
@@ -40,13 +48,33 @@
                 <label class="block text-sm font-medium">Featured Image</label>
                 <div class="flex items-center gap-4">
                     <input type="file" name="featured_image" class="mt-1">
-                    <a href="{{ route('admin.media.index') }}" class="text-blue-600 underline">Open Media Library</a>
-                </div>
+                    <a href="{{ route('admin.media.index') }}" target="_blank" class="text-blue-600 underline">Open Media Library</a>
+                </div
                 @if ($news->featured_image)
                     <div class="mt-2"><img src="{{ asset('storage/' . $news->featured_image) }}" class="w-48 rounded">
                     </div>
                 @endif
             </div>
+            <div class="mb-4 grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium">Category</label>
+                    <select name="category_id" class="mt-1 block w-full border rounded p-2">
+                        <option value="">— Select —</option>
+                        @foreach(App\Models\Category::all() as $cat)
+                            <option value="{{ $cat->id }}" {{ $news->category_id == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Tags</label>
+                    <select name="tags[]" multiple class="mt-1 block w-full border rounded p-2">
+                        @foreach(App\Models\Tag::all() as $tag)
+                            <option value="{{ $tag->id }}" {{ $news->tags->contains($tag->id) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <div class="mb-4">
                 <label class="block text-sm font-medium">Status</label>
                 <select name="status" class="mt-1 block w-full border rounded p-2">

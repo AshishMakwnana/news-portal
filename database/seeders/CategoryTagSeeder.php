@@ -14,12 +14,12 @@ class CategoryTagSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Politics','Business','Technology','Sports','Entertainment'];
+        $categories = ['Politics', 'Business', 'Technology', 'Sports', 'Entertainment'];
         foreach ($categories as $c) {
             Category::firstOrCreate(['name' => $c], ['slug' => \Illuminate\Support\Str::slug($c)]);
         }
 
-        $tags = ['Breaking','Opinion','Analysis','Interview','Featured'];
+        $tags = ['Breaking', 'Opinion', 'Analysis', 'Interview', 'Featured'];
         foreach ($tags as $t) {
             Tag::firstOrCreate(['name' => $t], ['slug' => \Illuminate\Support\Str::slug($t)]);
         }

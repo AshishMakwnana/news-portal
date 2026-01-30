@@ -42,6 +42,9 @@ class NewsController extends Controller
             'featured_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -52,6 +55,10 @@ class NewsController extends Controller
         $data['user_id'] = auth()->id();
 
         $news = News::create($data);
+
+        if (! empty($data['tags'])) {
+            $news->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('admin.news.index')->with('success', 'News created.');
     }
@@ -83,6 +90,9 @@ class NewsController extends Controller
             'featured_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -91,6 +101,12 @@ class NewsController extends Controller
         }
 
         $news->update($data);
+
+        if (! empty($data['tags'])) {
+            $news->tags()->sync($data['tags']);
+        } else {
+            $news->tags()->sync([]);
+        }
 
         return redirect()->route('admin.news.index')->with('success', 'News updated.');
     }
