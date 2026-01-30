@@ -12,6 +12,11 @@ Route::delete('/admin/comments/{comment}', [\App\Http\Controllers\CommentControl
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('news', NewsController::class);
+
+    // Media library routes
+    Route::get('media', [\App\Http\Controllers\MediaController::class, 'index'])->name('media.index');
+    Route::post('media/upload', [\App\Http\Controllers\MediaController::class, 'upload'])->name('media.upload');
+    Route::delete('media/{media}', [\App\Http\Controllers\MediaController::class, 'destroy'])->name('media.destroy');
 });
 
 if (file_exists(__DIR__ . '/auth.php')) {

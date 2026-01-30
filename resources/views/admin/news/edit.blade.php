@@ -31,7 +31,10 @@
             @endpush
             <div class="mb-4">
                 <label class="block text-sm font-medium">Featured Image</label>
-                <input type="file" name="featured_image" class="mt-1">
+                <div class="flex items-center gap-4">
+                    <input type="file" name="featured_image" class="mt-1">
+                    <a href="{{ route('admin.media.index') }}" class="text-blue-600 underline">Open Media Library</a>
+                </div>
                 @if ($news->featured_image)
                     <div class="mt-2"><img src="{{ asset('storage/' . $news->featured_image) }}" class="w-48 rounded">
                     </div>

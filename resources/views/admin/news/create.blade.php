@@ -29,7 +29,10 @@
             @endpush
             <div class="mb-4">
                 <label class="block text-sm font-medium">Featured Image</label>
-                <input type="file" name="featured_image" class="mt-1">
+                <div class="flex items-center gap-4">
+                    <input type="file" name="featured_image" class="mt-1">
+                    <a href="{{ route('admin.media.index') }}" class="text-blue-600 underline">Open Media Library</a>
+                </div>
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium">Status</label>
