@@ -60,4 +60,14 @@ class News extends Model
     {
         return $this->comments()->where('approved', true)->latest();
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
