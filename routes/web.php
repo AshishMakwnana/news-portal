@@ -8,7 +8,7 @@ Route::get('/', [PublicNewsController::class, 'index'])->name('home');
 Route::get('/news/{slug}', [PublicNewsController::class, 'show'])->name('news.show');
 Route::get('/category/{slug}', [PublicNewsController::class, 'category'])->name('category.show');
 Route::get('/tag/{slug}', [PublicNewsController::class, 'tag'])->name('tag.show');
-Route::post('/news/{news}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('news.comments.store');
+Route::post('/news/{news}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('throttle:5,1')->name('news.comments.store');
 Route::post('/admin/comments/{comment}/approve', [\App\Http\Controllers\CommentController::class, 'approve'])->middleware('auth')->name('admin.comments.approve');
 Route::delete('/admin/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware('auth')->name('admin.comments.destroy');
 

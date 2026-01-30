@@ -20,7 +20,13 @@ class CommentController extends Controller
             // By default, don't auto-approve user comments for moderation workflow
             'approved' => auth()->user()->hasAnyRole(['Super Admin', 'Editor', 'Moderator']) ? true : false,
         ]);
-
+        // Notify moderators if comment is not auto-approved
+        if (! $comment->approved) {
+            $moderators = \App\Models\User::role(['Super Admin','Editor','Moderator'])->get();
+            if ($moderators->count()) {
+                \Illuminate\Support\Facades\Notification::send($moderators, new \App\Notifications\NewCommentForModeration($comment));
+            }
+        }
         return back()->with('success', 'Comment submitted' . ($comment->approved ? '' : ' and awaiting moderation'));
     }
 
